@@ -1,0 +1,98 @@
+<html>
+<head>
+	<script type="text/javascript">
+	var x=(function showName(firstName,lastName)
+	{
+		var nameIntro="Your name is ";
+		function makeFullName(){
+			return nameIntro+firstName+" "+lastName;
+		}
+		return makeFullName;
+	}("si","jun"));
+	function test()
+	{
+  document.getElementById("demo").innerHTML=x(); // Your name is Michael Jackson 
+}
+
+</script>
+<script type="text/javascript">
+var c=(function a(){
+	var x=0;
+	var b=function(){
+		alert(++x);
+		return x;
+	}
+	return b;//b()
+})();
+function test2(){
+	 document.getElementById("demo2").innerHTML=c(); // c
+}
+
+</script>
+
+
+<script type="text/javascript">
+var f1 = function() {
+    var res = [];
+    var fun = null;
+    for(var i = 0; i < 10; i++) {
+        fun = function() { console.log(i); return 2;};//产生闭包
+        res.push(fun);
+    }
+
+    return res;
+}
+
+// 会输出10个10，而不是预期的0 1 2 3 4 5 6 7 8 9
+function test3()
+{
+var res = f1();
+document.getElementById("demo3").innerHTML=res[0]();
+for(var i = 0; i < res.length; i++) {
+    res[i]();
+}
+
+}
+</script>
+
+<script type="text/javascript">
+var f2 = function() {
+    var res = [];
+    for(var i = 0; i < 10; i++) {
+        // 添加一个IIFE
+        (function(index) {
+            fun = function() {console.log(index); return 7;};
+            res.push(fun);
+        })(i);
+    }
+
+    return res;
+}
+
+
+function test4()
+{
+// 输出结果为0 1 2 3 4 5 6 7 8 9
+var res = f2();
+document.getElementById("demo4").innerHTML=res[5];
+for(var i = 0; i < res.length; i++) {
+    res[i]();
+}
+}
+
+</script>
+
+
+</head>
+<body>
+	<input type="button" value="clouse" onclick="test()"/>
+	<div id="demo"></div>
+	<input type="button" value="clouse2" onclick="test2()"/>
+	<div id="demo2"></div>
+	<input type="button" value="clouse3" onclick="test3()"/>
+	<div id="demo3"></div>
+	<input type="button" value="clouse4" onclick="test4()"/>
+	<div id="demo4"></div>
+</body>
+
+</html>
